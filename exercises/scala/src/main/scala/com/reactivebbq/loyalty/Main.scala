@@ -5,6 +5,7 @@ import java.nio.file.Paths
 import akka.actor.ActorSystem
 import akka.cluster.sharding.{ClusterSharding, ClusterShardingSettings}
 import akka.http.scaladsl.Http
+import akka.management.scaladsl.AkkaManagement
 import org.slf4j.LoggerFactory
 
 object Main extends App {
@@ -18,6 +19,7 @@ object Main extends App {
   }
 
   implicit val system: ActorSystem = ActorSystem("Loyalty")
+  AkkaManagement(system).start()
 
   val rootPath = Paths.get("tmp")
   val loyaltyRepository: LoyaltyRepository = new FileBasedLoyaltyRepository(rootPath)(system.dispatcher)
